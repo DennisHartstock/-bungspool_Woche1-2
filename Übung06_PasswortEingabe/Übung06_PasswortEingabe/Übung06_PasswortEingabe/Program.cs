@@ -26,7 +26,73 @@ namespace Übung06_PasswortEingabe
     {
         static void Main(string[] args)
         {
-            Console.ReadLine();
+            string passwort = "geheim";
+            int count = 0;
+            bool verkehrt = false;
+
+            while (count < passwort.Length && !verkehrt)
+            {
+                Console.Write($"Bitte geben Sie das {count + 1}. Zeichen des Passworts ein: ");
+                char eingabe = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+
+                if (count == 0)
+                {
+                    if (eingabe != 'g')
+                    {
+                        Console.WriteLine("Falsches Passwort.");
+                        Console.ReadLine();
+                    }
+                }
+                else
+                {
+                    switch (eingabe)
+                    {
+                        case 'e':
+                            if (count != 1 && count != 3)
+                            {
+                                verkehrt = true;
+                            }
+                            break;
+                        case 'h':
+                            if (count != 2)
+                            {
+                                verkehrt = true;
+                            }
+                            break;
+                        case 'i':
+                            if (count != 4)
+                            {
+                                verkehrt = true;
+                            }
+                            break;
+                        case 'm':
+                            if (count != 5)
+                            {
+                                verkehrt = true;
+                            }
+                            break;
+                        default:
+                            verkehrt = true;
+                            break;
+                    }
+                }
+
+                if (verkehrt)
+                {
+                    Console.WriteLine("Falsches Passwort.");
+                    return;
+                }
+
+                count++;
+            }
+
+            if (!verkehrt && count == passwort.Length)
+            {
+                Console.WriteLine("Passwort korrekt eingegeben!");
+                Console.ReadLine();
+            }
         }
     }
 }
+
