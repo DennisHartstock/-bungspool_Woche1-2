@@ -24,6 +24,36 @@ namespace Übung03ZufallsBedingungen
              *   Durchläufe notwendig waren, um die Schleife zu beenden, 
              *   d.h. bis die Schleifenbedingung zu 'false' ausgewertet wurde.
              */
+
+            Random random = new Random();
+            int durchlaeufe = 0;
+            double a, b, c;
+
+            while (true)
+            {
+                a = random.NextDouble();
+                b = random.NextDouble();
+                c = random.NextDouble();
+                durchlaeufe++;
+
+                Console.WriteLine($"Durchlauf {durchlaeufe}: a = {a:F4}, b = {b:F4}, c = {c:F4}");
+
+                bool bedingungA = a > b;
+                bool bedingungB = (c > b && c < a) || (c > a && c < b);
+                double mittelwert = (a + b + c) / 3;
+                bool bedingungC = mittelwert > 0.6;
+
+                if (bedingungA && bedingungB && bedingungC)
+                {
+                    Console.WriteLine("Bedingungen erfüllt!");
+                    break;
+                }
+            }
+
+            Console.WriteLine($"Anzahl der Durchläufe: {durchlaeufe}");
+
+            Console.ReadLine();
         }
     }
 }
+
