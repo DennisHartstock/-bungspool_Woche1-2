@@ -51,6 +51,49 @@ namespace Übung05_BodymassIndex
              *            d.h. vermeiden Sie möglichst viele Bedingungsauswertungen
              */
 
+            Console.Write("Bitte geben Sie Ihr Gewicht in kg ein: ");
+            double gewicht = Convert.ToDouble(Console.ReadLine());
+
+            Console.Write("Bitte geben Sie Ihre Größe in Metern ein: ");
+            double groesse = Convert.ToDouble(Console.ReadLine());
+
+            double bmi = gewicht / (groesse * groesse);
+
+            Console.WriteLine($"Ihr BMI beträgt: {bmi:F2}");
+
+            if (bmi < 10)
+            {
+                Console.WriteLine("Überprüfen Sie Ihre Eingabe.");
+            }
+            else if (bmi >= 10 && bmi < 15)
+            {
+                Console.WriteLine("Magersucht");
+            }
+            else if (bmi >= 15 && bmi < 20)
+            {
+                Console.WriteLine("Untergewicht");
+            }
+            else if (bmi >= 20 && bmi < 25)
+            {
+                Console.WriteLine("Normalgewicht");
+            }
+            else if (bmi >= 25 && bmi < 30)
+            {
+                Console.WriteLine("Übergewicht");
+            }
+            else if (bmi >= 30 && bmi < 40)
+            {
+                Console.WriteLine("Fettsucht");
+            }
+            else if (bmi >= 40 && bmi < 50)
+            {
+                Console.WriteLine("Morbide Fettsucht");
+            }
+            else if (bmi >= 50)
+            {
+                Console.WriteLine("Überprüfen Sie Ihre Eingabe.");
+            }
+
             Console.ReadLine();
         }
     }
