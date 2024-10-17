@@ -8,6 +8,8 @@ namespace Übung01
     {
         static void Main(string[] args)
         {
+
+#if false
             /*
              * 1.Aufgabe: Finden Sie die genaue positive und negative Grenze
              *            für den Datentyp 'int' heraus
@@ -20,21 +22,165 @@ namespace Übung01
              *    als auch hexadezimal
              */
 
+            int positiveBoundary = 0;
+            int negativeBoundary = 0;
 
-	        /*
-	         * 2.Aufgabe: Speichern Sie in Variablen der Datentypen
-	         *
-	         *            (a) sbyte, byte
-	         *            (b) short, ushort
+            // Positive Grenze finden
+            try
+            {
+                while (true)
+                {
+                    positiveBoundary = checked(positiveBoundary + 1);
+                }
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine($"Positive Grenze (dezimal): {positiveBoundary}");
+                Console.WriteLine($"Positive Grenze (hexadezimal): {positiveBoundary:X}");
+            }
+
+            // Negative Grenze finden
+            try
+            {
+                while (true)
+                {
+                    negativeBoundary = checked(negativeBoundary - 1);
+                }
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine($"Negative Grenze (dezimal): {negativeBoundary}");
+                Console.WriteLine($"Negative Grenze (hexadezimal): {negativeBoundary:X}");
+            }
+            Console.ReadLine();
+
+#endif
+
+#if false
+
+            /*
+             * 2.Aufgabe: Speichern Sie in Variablen der Datentypen
+             *
+             *            (a) sbyte, byte
+             *            (b) short, ushort
              *            (c) long, ulong
-	         *
-	         *            den jeweils größten und kleinsten darstellbaren Wert ab
-	         *            und geben Sie diesen aus.
-	         *
-	         *            Prüfen Sie jeweils, was beim Überlauf passiert.
-	         */
+             *
+             *            den jeweils größten und kleinsten darstellbaren Wert ab
+             *            und geben Sie diesen aus.
+             *
+             *            Prüfen Sie jeweils, was beim Überlauf passiert.
+             */
 
+            // (a) sbyte, byte
+            sbyte minSByte = sbyte.MinValue;
+            sbyte maxSByte = sbyte.MaxValue;
+            byte minByte = byte.MinValue;
+            byte maxByte = byte.MaxValue;
 
+            Console.WriteLine($"sbyte: Min = {minSByte}, Max = {maxSByte}");
+            Console.WriteLine($"byte: Min = {minByte}, Max = {maxByte}");
+
+            // (b) short, ushort
+            short minShort = short.MinValue;
+            short maxShort = short.MaxValue;
+            ushort minUShort = ushort.MinValue;
+            ushort maxUShort = ushort.MaxValue;
+
+            Console.WriteLine($"short: Min = {minShort}, Max = {maxShort}");
+            Console.WriteLine($"ushort: Min = {minUShort}, Max = {maxUShort}");
+
+            // (c) long, ulong
+            long minLong = long.MinValue;
+            long maxLong = long.MaxValue;
+            ulong minULong = ulong.MinValue;
+            ulong maxULong = ulong.MaxValue;
+
+            Console.WriteLine($"long: Min = {minLong}, Max = {maxLong}");
+            Console.WriteLine($"ulong: Min = {minULong}, Max = {maxULong}");
+
+            // Überlauf prüfen
+            CheckOverflow();
+        }
+
+        static void CheckOverflow()
+        {
+            // sbyte Überlauf
+            try
+            {
+                sbyte sbyteOverflow = sbyte.MaxValue;
+                sbyteOverflow++;
+                Console.WriteLine($"sbyte Überlauf: {sbyteOverflow}");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("sbyte Überlauf erkannt!");
+            }
+
+            // byte Überlauf
+            try
+            {
+                byte byteOverflow = byte.MaxValue;
+                byteOverflow++;
+                Console.WriteLine($"byte Überlauf: {byteOverflow}");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("byte Überlauf erkannt!");
+            }
+
+            // short Überlauf
+            try
+            {
+                short shortOverflow = short.MaxValue;
+                shortOverflow++;
+                Console.WriteLine($"short Überlauf: {shortOverflow}");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("short Überlauf erkannt!");
+            }
+
+            // ushort Überlauf
+            try
+            {
+                ushort ushortOverflow = ushort.MaxValue;
+                ushortOverflow++;
+                Console.WriteLine($"ushort Überlauf: {ushortOverflow}");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("ushort Überlauf erkannt!");
+            }
+
+            // long Überlauf
+            try
+            {
+                long longOverflow = long.MaxValue;
+                longOverflow++;
+                Console.WriteLine($"long Überlauf: {longOverflow}");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("long Überlauf erkannt!");
+            }
+
+            // ulong Überlauf
+            try
+            {
+                ulong ulongOverflow = ulong.MaxValue;
+                ulongOverflow++;
+                Console.WriteLine($"ulong Überlauf: {ulongOverflow}");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("ulong Überlauf erkannt!");
+            }
+
+            Console.ReadLine();
+
+#endif
+
+#if true
             /*
              * 3.Aufgabe: Berechnen Sie die Wahrscheinlichkeit, 
              *            einen "Sechser" im Lotto zu tippen:
@@ -62,6 +208,34 @@ namespace Übung01
              *
              *            Geben Sie beide Ergebnisse aus.
              */
+            long combinations = CalculateCombinations(49, 6);
+            double probability = 1.0 / combinations;
+
+            Console.WriteLine($"Anzahl der Möglichkeiten: {combinations}");
+            Console.WriteLine($"Wahrscheinlichkeit auf einen \"Sechser\": {probability}");
+
+            Console.ReadLine();
+        }
+
+        static long CalculateCombinations(int n, int k)
+        {
+            long numerator = 1;
+            for (int i = 0; i < k; i++)
+            {
+                numerator *= (n - i);
+            }
+
+            long denominator = 1;
+            for (int i = 1; i <= k; i++)
+            {
+                denominator *= i;
+            }
+
+            return numerator / denominator;
+
+
+#endif
         }
     }
 }
+
