@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace UebungBenutzereingabe
 {
@@ -27,6 +28,82 @@ namespace UebungBenutzereingabe
              * das Alter (in ganzen Jahren) angegeben bzw. berechnet werden soll.
              */
 
+
+            string firstName = GetValidatedInput("Vorname", @"^[a-zA-Z\-]{5,}$");
+            string lastName = GetValidatedInput("Nachname", @"^[a-zA-Z\-]{5,}$");
+            DateTime birthDate = GetValidatedDate("Geburtsdatum (dd.MM.yyyy)");
+            double height = GetValidatedHeight("Größe (in cm, 20-250)");
+            string email = GetValidatedInput("Email", @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+
+            int age = CalculateAge(birthDate);
+
+            Console.WriteLine("\nEingegebene Daten:");
+            Console.WriteLine($"Vorname: {firstName}");
+            Console.WriteLine($"Nachname: {lastName}");
+            Console.WriteLine($"Geburtsdatum: {birthDate:dd.MM.yyyy}");
+            Console.WriteLine($"Alter: {age} Jahre");
+            Console.WriteLine($"Größe: {height} cm");
+            Console.WriteLine($"Email: {email}");
+
+            Console.ReadLine();
+        }
+
+        static string GetValidatedInput(string fieldName, string pattern)
+        {
+            string input;
+            Regex regex = new Regex(pattern);
+            do
+            {
+                Console.Write($"{fieldName}: ");
+                input = Console.ReadLine();
+                if (!regex.IsMatch(input))
+                {
+                    Console.WriteLine($"Ungültige Eingabe für {fieldName}. Bitte erneut versuchen.");
+                }
+            } while (!regex.IsMatch(input));
+            return input;
+        }
+
+        static DateTime GetValidatedDate(string fieldName)
+        {
+            string input;
+            DateTime date;
+            do
+            {
+                Console.Write($"{fieldName}: ");
+                input = Console.ReadLine();
+                if (!DateTime.TryParse(input, out date) || date > DateTime.Now)
+                {
+                    Console.WriteLine($"Ungültiges Datum. Bitte erneut versuchen.");
+                }
+            } while (date > DateTime.Now || !DateTime.TryParse(input, out date));
+            return date;
+        }
+
+        static double GetValidatedHeight(string fieldName)
+        {
+            string input;
+            double number;
+            do
+            {
+                Console.Write($"{fieldName}: ");
+                input = Console.ReadLine();
+                if (!double.TryParse(input, out number) || number < 20 || number > 250)
+                {
+                    Console.WriteLine($"Ungültige Zahl. Bitte eine Zahl zwischen 20 und 250 eingeben.");
+                }
+            } while (!double.TryParse(input, out number) || number < 20 || number > 250);
+            return number;
+        }
+
+        static int CalculateAge(DateTime birthDate)
+        {
+            int age = DateTime.Now.Year - birthDate.Year;
+            if (DateTime.Now.DayOfYear < birthDate.DayOfYear)
+            {
+                age--;
+            }
+            return age;
         }
     }
 }
