@@ -32,7 +32,7 @@ namespace UebungBenutzereingabe
             string firstName = GetValidatedInput("Vorname", @"^[a-zA-Z\-]{5,}$");
             string lastName = GetValidatedInput("Nachname", @"^[a-zA-Z\-]{5,}$");
             DateTime birthDate = GetValidatedDate("Geburtsdatum (dd.MM.yyyy)");
-            double height = GetValidatedHeight("Größe (in cm, 20-250)");
+            double height = GetValidatedHeight("Größe (in cm, 20-250)", @"^[0-9]{3,}$");
             string email = GetValidatedInput("Email", @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
 
             int age = CalculateAge(birthDate);
@@ -80,19 +80,20 @@ namespace UebungBenutzereingabe
             return date;
         }
 
-        static double GetValidatedHeight(string fieldName)
+        static double GetValidatedHeight(string fieldName, string pattern)
         {
             string input;
-            double number;
+            Regex regex = new Regex(pattern);
+            double number = 0;
             do
             {
                 Console.Write($"{fieldName}: ");
                 input = Console.ReadLine();
-                if (!double.TryParse(input, out number) || number < 20 || number > 250)
+                if (!regex.IsMatch(input) && !double.TryParse(input, out number) || number < 20 || number > 250)
                 {
                     Console.WriteLine($"Ungültige Zahl. Bitte eine Zahl zwischen 20 und 250 eingeben.");
                 }
-            } while (!double.TryParse(input, out number) || number < 20 || number > 250);
+            } while (!regex.IsMatch(input) && !double.TryParse(input, out number) || number < 20 || number > 250);
             return number;
         }
 
