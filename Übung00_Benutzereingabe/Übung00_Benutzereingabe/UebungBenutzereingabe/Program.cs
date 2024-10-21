@@ -85,15 +85,17 @@ namespace UebungBenutzereingabe
             string input;
             Regex regex = new Regex(pattern);
             double number = 0;
+            bool isValidatedInput;
             do
             {
                 Console.Write($"{fieldName}: ");
                 input = Console.ReadLine();
-                if (!regex.IsMatch(input) && !double.TryParse(input, out number) || number < 20 || number > 250)
+                isValidatedInput = !regex.IsMatch(input) && !double.TryParse(input, out number) || number < 20 || number > 250;
+                if (isValidatedInput)
                 {
                     Console.WriteLine($"Ungültige Zahl. Bitte eine Zahl zwischen 20 und 250 eingeben.");
                 }
-            } while (!regex.IsMatch(input) && !double.TryParse(input, out number) || number < 20 || number > 250);
+            } while (isValidatedInput);
             return number;
         }
 
